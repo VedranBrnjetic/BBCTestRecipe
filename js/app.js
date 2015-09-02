@@ -129,7 +129,8 @@ $(document).ready(function(){
 		}
 	});
 
-	$("#toggle-star").click(function(){
+	$("#toggle-star").click(function(e){
+		e.preventDefault();
 		$.ajax({
 			url: "classes/app.php",
 			type: "POST",
@@ -173,7 +174,7 @@ $(document).ready(function(){
 '      </table>'+
 '    </div>';
 	$("#starred-recipes").html(html);
-	document.location.reload();	
+	setTimeout(function(){document.location.reload();},200);
 		});
 	})
 	

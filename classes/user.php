@@ -5,7 +5,6 @@ class User implements JsonSerializable {
 	
 	private $id;
 	private $name;
-	private $pass;
 	private $con;
 	private $exists=false;
 	
@@ -30,7 +29,7 @@ class User implements JsonSerializable {
 		if(!empty($obj)){
 			$this->exists = true;
 			$this->name=$obj[0]->name;
-			$this->pass=$obj[0]->pass;
+			
 		}
 		else{
 			$this->exists = true;

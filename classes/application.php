@@ -77,6 +77,7 @@ class RecipeApp{
 		}
 	}
 	function recipeList($searchMode=0,$value="",$limit=" 3 ",$page=1){
+		//echo $value;
 		$var=new stdClass();
 		$offset=($page - 1) * 10;
 		$limit.= " OFFSET ".strval($offset);
@@ -125,19 +126,22 @@ class RecipeApp{
 		return $this->recipes;
 	}
 	
-	function starredRecipeList($userId,$recipeId,$page=1){
+	function starredRecipeList($userId,$recipeId,$page=1,$toggle=false){
 		$recipe=new Recipe($recipeId);
 		$user=new User($userId);
 		$starredRecipe = new StarredRecipe($userId);
 		$isStarred=false;
-			foreach ($starredRecipe->recipes() as $recipe1){
-				if ($recipe->id()==$recipe1->id()){
+		foreach ($starredRecipe->recipes() as $recipe1){
+			if ($recipe->id()==$recipe1->id()){
+				//echo $recipe->id() . " == ". $recipe1->id();
 				$isStarred=true;
 			}
-		if($isStarred){
-			$starredRecipe->unstarRecipe($userId,$recipeId);
 		}
-		else 
+		if($toggle){
+			if($isStarred){
+				$starredRecipe->unstarRecipe($userId,$recipeId);
+			}
+			else 
 			{
 				
 				$starredRecipe->starRecipe($userId,$recipeId);

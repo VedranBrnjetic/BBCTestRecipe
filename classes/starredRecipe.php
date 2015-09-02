@@ -72,22 +72,26 @@ class StarredRecipe extends User {
 		$user=new User($usr);
 		$recipe=new Recipe($recipe_id);
 		if($recipe->exists()){
-			$table="Starred";
-			$fieldset=array("user_id","recipe_id");
-			$values=array();
+			//$table="Starred";
+			//$fieldset=array("user_id","recipe_id");
+			//$values=array();
 			
-			$user_id=new stdClass();
-			$user_id->column="user_id";
-			$user_id->value=$user->id();
+			//$user_id=new stdClass();
+			//$user_id->column="user_id";
+			//$user_id->value=$user->id();
 			
-			$recipe_id1=new stdClass();
-			$recipe_id1->column="recipe_id";
-			$recipe_id1->value=$recipe->id();
+			//$recipe_id1=new stdClass();
+			//$recipe_id1->column="recipe_id";
+			//$recipe_id1->value=$recipe->id();
 			
-			$row=array($user_id,$recipe_id1);
-			array_push($values,$row);
+			//$row=array($user_id,$recipe_id1);
+			//array_push($values,$row);
+			//print_r($row);
 			try{
-				$con1->pdo_insert($table,$fieldset,$values);
+				if(!($usr= (int)$usr))return;
+				if(!($recipe_id=(int)$recipe_id))return;
+
+				$con1->pdo_query(" insert into Starred(user_id,recipe_id)values($usr,$recipe_id);");
 			}
 			catch(PDOException $Exception){
 				print_r ($Exception);
@@ -107,26 +111,31 @@ class StarredRecipe extends User {
 		$recipe=new Recipe($recipe_id);
 		
 		if($recipe->exists()){
-		$table="Starred";
+		//$table="Starred";
 		
-		$conditions=array();
+		//$conditions=array();
 		
 		
-		$user_id=new stdClass();
-		$user_id->column="user_id";
-		$user_id->value=$user->id();
-		$user_id->compare="=";
-		$user_id->logical="and";
+		//$user_id=new stdClass();
+		//$user_id->column="user_id";
+		//$user_id->value=$user->id();
+		//$user_id->compare="=";
+		//$user_id->logical="and";
 		
-		$recipe_id1=new stdClass();
-		$recipe_id1->column="recipe_id";
-		$recipe_id1->value=$recipe->id();
-		$recipe_id1->compare="=";
-		$recipe_id1->logical="";
-		$conditions=array($user_id,$recipe_id1);
+		//$recipe_id1=new stdClass();
+		//$recipe_id1->column="recipe_id";
+		//$recipe_id1->value=$recipe->id();
+		//$recipe_id1->compare="=";
+		//$recipe_id1->logical="";
+		//$conditions=array($user_id,$recipe_id1);
 		
 			try{
-				$con1->pdo_delete($table,$conditions);
+				 if(!($usr= (int)$usr))return;
+                 if(!($recipe_id=(int)$recipe_id))return;
+
+                                $con1->pdo_query(" delete from Starred where user_id  = $usr and recipe_id=$recipe_id;");
+
+				//$con1->pdo_delete($table,$conditions);
 			}
 			catch(PDOException $Exception){
 				print_r ($Exception);

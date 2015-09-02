@@ -25,14 +25,14 @@ class SQLconnection {
 	//accepts string
 	public function pdo_query($query_string){
 		$sql = $query_string;
-		$stmt=$this->pdo->prepare($sql);
-		$stmt->execute();
-		$obj=array();
-		while($row=$stmt->fetch(PDO::FETCH_OBJ)){
-			array_push($obj,$row);
-		}
-		unset($stmt);
-		return ($obj);
+		$stmt=$this->pdo->query($sql);
+		//$stmt->execute();
+		//$obj=array();
+		//while($row=$stmt->fetch(PDO::FETCH_OBJ)){
+		//	array_push($obj,$row);
+		//}
+		//unset($stmt);
+		//return ($obj);
 		
 	}
 	
@@ -67,9 +67,11 @@ class SQLconnection {
 			
 		}
 		$sql .=" ;";
+		//echo $sql;
 		
 		$stmt=$this->pdo->prepare($sql);
 		try{
+			//print_r($query_params);
 			foreach($query_params as $param){
 				$column=":".$param->column;
 				$value=$param->value;
@@ -105,7 +107,7 @@ class SQLconnection {
 			print_r ($Exception);
 			$res=$Exception;
 		}
-		unset($stmt);
+		//unset($stmt);
 		return ($res);
 		
 	}
@@ -135,20 +137,20 @@ class SQLconnection {
 		$sql.=";";
 		
 		
-		$stmt=$this->pdo->prepare($sql);
+		$insertstmt=$this->pdo->prepare($sql);
 		
 		$i=0;
 		foreach($values as $value_row){
 			foreach($value_row as $obj){
 				$column=":".$obj->column.$i;
 				$value=$obj->value;
-				
-				$stmt->bindParam($column,$value);
+				//echo $column." - ". $value . ";";
+				$insertstmt->bindParam($column,$value);
 			}
 			$i++;
 		}
 		try {
-			$result=$stmt->execute();
+			$result=$insertstmt->execute();
 			return $result;
 		}
 		catch(PDOException $Exception){
@@ -187,7 +189,7 @@ class SQLconnection {
 			print_r ($Exception);
 			$res=$Exception;
 		}
-		unset($stmt);
+		//unset($stmt);
 		return $res;
 		
 	}

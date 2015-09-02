@@ -14,16 +14,18 @@ if(!empty($_POST['searchRecipes'])){
 	$mode=$_POST['searchRecipes'];
 	
 	$query=$_POST['searchQuery'];
+//	echo $query;
 	$limit=" 10 ";
-	if(!empty($query=$_POST['page'];)){$page=$_POST['page'];}
+	if(!empty($_POST['page'])){$page=$_POST['page'];}
 	else $page=1;
 	$response['filteredRecipes']=$app->recipeList($mode,$query,$limit,$page);
 }
 if(!empty($_POST['action'])){
 	$userId=$_POST['userid'];
 	$recipeId=$_POST['recipeid'];
-	
-	$response['starredRecipes']=$app->starredRecipeList($userId,$recipeId);
+	if(!empty($_POST['page']))$page=$_POST['page'];
+	else $page=1;
+	$response['starredRecipes']=$app->starredRecipeList($userId,$recipeId,$page,true);
 }
 
 echo json_encode($response);
