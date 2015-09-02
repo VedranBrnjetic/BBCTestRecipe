@@ -61,9 +61,11 @@ class SQLconnection {
 		}
 		//optional pagination
 		if($limit!=0){
+			
 			$sql.=" LIMIT ".$limit;
+			
 		}
-		$sql .=";";
+		$sql .=" ;";
 		
 		$stmt=$this->pdo->prepare($sql);
 		try{

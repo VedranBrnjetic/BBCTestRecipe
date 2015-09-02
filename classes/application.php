@@ -80,7 +80,7 @@ class RecipeApp{
 		$var=new stdClass();
 		$limit=" 10 ";
 		$offset=($page - 1) * 10;
-		$limit.= ", ".strval($offset);
+		$limit.= " OFFSET ".strval($offset);
 		$var->limit=$limit;
 		//searchMode 0 default=> load all, 1=>recipe name,2=>ingredient name,3=>cooking time
 		if($searchMode>0){
