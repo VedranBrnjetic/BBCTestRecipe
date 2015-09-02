@@ -76,9 +76,8 @@ class RecipeApp{
 				
 		}
 	}
-	function recipeList($searchMode=0,$value="",$page=1){
+	function recipeList($searchMode=0,$value="",$limit=" 3 ",$page=1){
 		$var=new stdClass();
-		$limit=" 10 ";
 		$offset=($page - 1) * 10;
 		$limit.= " OFFSET ".strval($offset);
 		$var->limit=$limit;

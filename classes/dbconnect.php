@@ -31,6 +31,7 @@ class SQLconnection {
 		while($row=$stmt->fetch(PDO::FETCH_OBJ)){
 			array_push($obj,$row);
 		}
+		unset($stmt);
 		return ($obj);
 		
 	}
@@ -104,7 +105,7 @@ class SQLconnection {
 			print_r ($Exception);
 			$res=$Exception;
 		}
-		
+		unset($stmt);
 		return ($res);
 		
 	}
@@ -186,6 +187,7 @@ class SQLconnection {
 			print_r ($Exception);
 			$res=$Exception;
 		}
+		unset($stmt);
 		return $res;
 		
 	}

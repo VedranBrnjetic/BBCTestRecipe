@@ -14,7 +14,10 @@ if(!empty($_POST['searchRecipes'])){
 	$mode=$_POST['searchRecipes'];
 	
 	$query=$_POST['searchQuery'];
-	$response['filteredRecipes']=$app->recipeList($mode,$query);
+	$limit=" 10 ";
+	if(!empty($query=$_POST['page'];)){$page=$_POST['page'];}
+	else $page=1;
+	$response['filteredRecipes']=$app->recipeList($mode,$query,$limit,$page);
 }
 if(!empty($_POST['action'])){
 	$userId=$_POST['userid'];
