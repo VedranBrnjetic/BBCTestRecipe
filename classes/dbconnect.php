@@ -38,7 +38,8 @@ class SQLconnection {
 	//parametrised query, accepts $result_fields[array], $table[stirng], $query_params[array of objects]
 	//$query_params[$object] column,compare,logical, value
 	//can be used to get any info from any single table. I should expand it to allow joins and unions
-	public function pdo_query_wparam($result_fields,$table,$query_params){
+	//$limit is for optional pagination; 0 means no limit
+	public function pdo_query_wparam($result_fields,$table,$query_params,$limit=0){
 		//preparing the query
 		$res=null;
 		$sql = " select ";
@@ -57,6 +58,10 @@ class SQLconnection {
 		
 		foreach($query_params as $param){
 			$sql .= $param->column." " . $param->compare ." :" . $param->column . " " . $param->logical ." ";
+		}
+		//optional pagination
+		if($limit!=0){
+			$sql.=" LIMIT ".$limit;
 		}
 		$sql .=";";
 		

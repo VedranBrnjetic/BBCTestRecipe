@@ -32,7 +32,9 @@ class RecipeApp{
 	function currentUser(){
 		return $this->currentUser;
 	}
-	function loadRecipeList($var){
+	
+	
+	function loadRecipeList($var,$pagination){
 		//clear current list
 		unset($this->recipes);
 		//reinitialize list
@@ -42,7 +44,7 @@ class RecipeApp{
 		
 		$query_params=array($var);
 		$con1=new SQLconnection();
-		$obj=$con1->pdo_query_wparam($result_fields,$table,$query_params);
+		$obj=$con1->pdo_query_wparam($result_fields,$table,$query_params,$var->limit);
 		//if there are results
 		if(!empty($obj)){
 			
@@ -74,8 +76,12 @@ class RecipeApp{
 				
 		}
 	}
-	function recipeList($searchMode=0,$value=""){
-		
+	function recipeList($searchMode=0,$value="",$page=1){
+		$var=new stdClass();
+		$limit=" 10 ";
+		$offset=($page - 1) * 10;
+		$limit.= ", ".strval($offset);
+		$var->limit=$limit;
 		//searchMode 0 default=> load all, 1=>recipe name,2=>ingredient name,3=>cooking time
 		if($searchMode>0){
 			$tables=array(
@@ -91,27 +97,28 @@ class RecipeApp{
 				"table"=>"Recipe",
 				"column"=>"cookingTime",
 				"result"=>array("id")));
-			$obj=new stdClass();
-			$obj->table=$tables[$searchMode]["table"];
-			$obj->column=$tables[$searchMode]["column"];
-			$obj->compare="like";
-			$obj->logical="";
-			$obj->value="%".$value."%";
-			if($searchMode==3){$obj->compare="<=";$obj->value=$value;}
-			$obj->result_fields=$tables[$searchMode]["result"];
+			
+			
+			$var->table=$tables[$searchMode]["table"];
+			$var->column=$tables[$searchMode]["column"];
+			$var->compare="like";
+			$var->logical="";
+			$var->page=$page;
+			$var->value="%".$value."%";
+			if($searchMode==3){$var->compare="<=";$var->value=$value;}
+			$var->result_fields=$tables[$searchMode]["result"];
 			
 		}
 		else{
-			$obj = new stdClass();
-			$obj->column="id";
-			$obj->compare=">";
-			$obj->logical="";
-			$obj->value=0;
-			$obj->table="Recipe";
-			$obj->result_fields=array("id");
+			$var->column="id";
+			$var->compare=">";
+			$var->logical="";
+			$var->value=0;
+			$var->table="Recipe";
+			$var->result_fields=array("id");
 		}
-		//print_r($obj);
-		$this->loadRecipeList($obj);
+		//print_r($var);
+		$this->loadRecipeList($var);
 		//$this->recipes=array_unique($this->recipes,SORT_REGULAR);
 		
 		
@@ -119,7 +126,7 @@ class RecipeApp{
 		return $this->recipes;
 	}
 	
-	function starredRecipeList($userId,$recipeId){
+	function starredRecipeList($userId,$recipeId,$page=1){
 		$recipe=new Recipe($recipeId);
 		$user=new User($userId);
 		$starredRecipe = new StarredRecipe($userId);
