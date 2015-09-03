@@ -18,6 +18,7 @@
     <!-- Navigation -->
     <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
     <nav id="sidebar-wrapper">
+		
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
             <li class="sidebar-brand">
@@ -70,13 +71,13 @@
 													  <li><a href="#3">Cooking time</a></li>
 													</ul>
 												</div>
-												<form>
+												
 													<input type="hidden" name="searchRecipes" value="1" id="search_param">         
 													<input type="text" class="form-control" id="search_query" name="searchQuery" placeholder="Search term...">
 													<span class="input-group-btn">
 														<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
 													</span>
-												</form>
+												
 												
 											</div>
 										</div>

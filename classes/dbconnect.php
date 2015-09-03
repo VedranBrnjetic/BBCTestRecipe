@@ -42,8 +42,12 @@ class SQLconnection {
 	//$limit is for optional pagination; 0 means no limit
 	public function pdo_query_wparam($result_fields,$table,$query_params,$limit=0){
 		//preparing the query
-		$res=null;
+		$res=new stdClass();
+		$res->err=null;
+		$res->results=array();
+		$res->resultCount=0;
 		$sql = " select ";
+		if($limit>0) $sql.= " SQL_CALC_FOUND_ROWS ";
 		//adding requested fields
 		foreach($result_fields as $field){
 			$sql .= $field.", ";
@@ -80,7 +84,7 @@ class SQLconnection {
 		}
 		catch(PDOException $Exception){
 			print_r ($Exception);
-			$res=$Exception;
+			$res->err=$Exception;
 		}
 		
 		try{
@@ -88,26 +92,31 @@ class SQLconnection {
 		}
 		catch(PDOException $Exception){
 			print_r ($Exception);
-			$res=$Exception;
+			$res->err=$Exception;
 		}
 		
 		
 		try{
-			$res=array();
 			$results=$stmt->fetchAll(PDO::FETCH_OBJ);
 			foreach($results as $result){
 				$string=utf8_encode(serialize($result));
 				$result=unserialize($string);
 				
-				array_push($res,$result);
+				array_push($res->results,$result);
 			}
 		}
 		catch(PDOException $Exception){
 			
 			print_r ($Exception);
-			$res=$Exception;
+			$res->err=$Exception;
 		}
-		//unset($stmt);
+		unset($stmt);
+		if($limit>0){ 
+			$stmt=$this->pdo->query(" SELECT FOUND_ROWS(); ");
+			$count=$stmt->fetch();
+			$res->resultCount=$count;
+			
+		}
 		return ($res);
 		
 	}

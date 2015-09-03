@@ -26,8 +26,8 @@ class StarredRecipe extends User {
 		$obj=$this->con->pdo_query_wparam($result_fields,$table,$query_params);
 		if(!empty($obj)){
 			$this->exists = true;
-			$this->name=$obj[0]->name;
-			$this->pass=$obj[0]->pass;
+			$this->name=$obj->results[0]->name;
+			$this->pass=$obj->results[0]->pass;
 			$this->isStarred=true;
 		}
 		else{
@@ -52,7 +52,8 @@ class StarredRecipe extends User {
 		$obj=$con1->pdo_query_wparam($result_fields,$table,$query_params);
 		
 		if(!empty($obj)){
-			foreach($obj as $rec){
+			foreach($obj->results as $key=>$rec){
+				
 				$recipe=new Recipe($rec->recipe_id);
 				array_push($this->recipes,$recipe);
 			}

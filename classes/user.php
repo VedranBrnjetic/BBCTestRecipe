@@ -28,7 +28,7 @@ class User implements JsonSerializable {
 		$obj=$this->con->pdo_query_wparam($result_fields,$table,$query_params);
 		if(!empty($obj)){
 			$this->exists = true;
-			$this->name=$obj[0]->name;
+			$this->name=$obj->results[0]->name;
 			
 		}
 		else{

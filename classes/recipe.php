@@ -34,9 +34,9 @@ class Recipe implements JsonSerializable {
 		
 		if(!empty($obj)){
 			$this->exists = true;
-			$this->name=$obj[0]->name;
-			$this->cookingTime=$obj[0]->cookingTime;
-			$this->imageUrl=$obj[0]->imageUrl;
+			$this->name=$obj->results[0]->name;
+			$this->cookingTime=$obj->results[0]->cookingTime;
+			$this->imageUrl=$obj->results[0]->imageUrl;
 			
 		}
 		else{
@@ -87,8 +87,7 @@ class Recipe implements JsonSerializable {
 		$obj=$con1->pdo_query_wparam($result_fields,$table,$query_params);
 		
 		if(!empty($obj)){
-			foreach($obj as $ing){
-				
+			foreach($obj->results as $ing){
 				$ingredient=new Ingredient($ing->ingredient_id);
 				$ingredient->setQuantity($ing->quantity);
 				array_push($this->ingredients,$ingredient);

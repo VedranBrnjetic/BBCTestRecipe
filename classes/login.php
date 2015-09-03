@@ -21,8 +21,8 @@ if(!empty($_POST['user1']) && !empty($_POST['pass1'])){
 	$query_params=array($name,$pass);
 	$obj=$con->pdo_query_wparam($result_fields,$table,$query_params);
 			
-	if(!empty ($obj[0])){
-		$user=new User($obj[0]->id);
+	if(!empty ($obj->results[0])){
+		$user=new User($obj->results[0]->id);
 		session_regenerate_id();
 		
 	}

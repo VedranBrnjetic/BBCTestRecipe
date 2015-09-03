@@ -21,6 +21,7 @@ class RecipeApp{
 	private $htmlDocumentJsFiles;
 	private $recipes=array();
 	private $starredRecipes=array();
+	private $recipe_count=0;
 	
 	function __construct($user_id=1){
 		$user=new User($user_id);
@@ -34,7 +35,7 @@ class RecipeApp{
 	}
 	
 	
-	function loadRecipeList($var,$pagination){
+	function loadRecipeList($var,$page=0){
 		//clear current list
 		unset($this->recipes);
 		//reinitialize list
@@ -45,11 +46,13 @@ class RecipeApp{
 		$query_params=array($var);
 		$con1=new SQLconnection();
 		$obj=$con1->pdo_query_wparam($result_fields,$table,$query_params,$var->limit);
+		
 		//if there are results
 		if(!empty($obj)){
+			$this->recipe_count=$obj->resultCount;
 			
-			
-			foreach($obj as $rec){
+			foreach($obj->results as $rec){
+				
 				//add raw recipes into list
 				$recipe=new Recipe($rec->id);
 				
@@ -70,6 +73,7 @@ class RecipeApp{
 					$temp[] = $recipe->jsonSerialize();
 				}
 				$this->recipes = $temp;
+				
 				unset($temp_uids, $unique_results);  
 				//prepare the recipes for cooking (jsonSerialize)
 				
@@ -148,6 +152,9 @@ class RecipeApp{
 			}
 		}
 		return $starredRecipe->recipes();
+	}
+	function recipeCount(){
+		return $this->recipe_count;
 	}
 	
 }

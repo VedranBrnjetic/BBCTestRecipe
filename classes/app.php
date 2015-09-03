@@ -19,6 +19,7 @@ if(!empty($_POST['searchRecipes'])){
 	if(!empty($_POST['page'])){$page=$_POST['page'];}
 	else $page=1;
 	$response['filteredRecipes']=$app->recipeList($mode,$query,$limit,$page);
+	$response['recipeCount']=$app->recipeCount();
 }
 if(!empty($_POST['action'])){
 	$userId=$_POST['userid'];

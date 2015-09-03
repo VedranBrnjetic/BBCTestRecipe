@@ -30,12 +30,12 @@ class Ingredient implements JsonSerializable{
 		$obj=$this->con->pdo_query_wparam($result_fields,$table,$query_params);
 		if(!empty($obj)){
 			$this->exists = true;
-			$this->name=$obj[0]->name;
-			$this->unit=$obj[0]->unit;
-			$this->unitRep=$obj[0]->unitRep;
+			$this->name=$obj->results[0]->name;
+			$this->unit=$obj->results[0]->unit;
+			$this->unitRep=$obj->results[0]->unitRep;
 		}
 		else{
-			$this->exists = true;
+			$this->exists = false;
 			$this->name="Sorry, this recipe doesn't exist or may have been removed";
 			$this->unit="N/A";
 			$this->unitRep="N/A";
