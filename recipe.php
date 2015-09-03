@@ -3,6 +3,9 @@
 	include 'classes/login.php';
 	include_once 'classes/recipe.php';
 	include_once 'classes/starredRecipe.php';
+	//let's login Joe
+	$user = new User(1);
+	
 	$title="BBC Test | Recipe";
 	$metaTitle="Recipe";
 	$metaKeywords="Recipe";
@@ -13,16 +16,17 @@
 	$recipe=new Recipe($recipeId);
 	
 	include_once 'parts/htmlHead.php';
-	//let's login Joe
-	$user = new User(1);
+	
 	$starredRecipe=new StarredRecipe($user->id());
+	
 	$star="fa-star-o";
-	foreach($starredRecipe->recipes() as $recipe1) {
-		if ($recipe->id()==$recipe1->id()){
-			$star="fa-star";
+	if(sizeof($starredRecipe->recipes())>0 && $starredRecipe->recipes()[0]->id()!=0){
+		foreach($starredRecipe->recipes() as $recipe1) {
+			if ($recipe->id()==$recipe1->id()){
+				$star="fa-star";
+			}
 		}
 	}
-	
 	
 ?>
 <body>
@@ -56,7 +60,7 @@
 						  <div class="panel-heading">Your starred recipes</div>
 
 						  <!-- Table -->
-						  <?php if($starredRecipe->recipes()[0]->id()!=0){ ?>
+						  <?php if(sizeof($starredRecipe->recipes())>0 && $starredRecipe->recipes()[0]->id()!=0){ ?>
 						  <table class="table">
 							<thead>
 							  <tr>
@@ -131,7 +135,7 @@
                             <a href="http://facebook.com/drvce"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-linkedin fa-fw fa-3x"></i></a>
+                            <a href="https://www.linkedin.com/pub/vedran-brnjeti%C4%87/66/b13/7b3"><i class="fa fa-linkedin fa-fw fa-3x"></i></a>
                         </li>
                     </ul>
                     <hr class="small">
