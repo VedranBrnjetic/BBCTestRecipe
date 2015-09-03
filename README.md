@@ -1,26 +1,23 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [Stylish Portfolio](http://startbootstrap.com/template-overviews/stylish-portfolio/)
+# [BBC Test Recipe](http://vedran.uk/bbctest/)
 
-[Stylish Portfolio](http://startbootstrap.com/template-overviews/stylish-portfolio/) is a responsive, one page portfolio theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). The theme features multiple content sections with an off canvas navigation menu.
+This project has been built for the purpose of hiring process for BBC - Full Stack Developer role. I have built it on LAMP stack using PHP/MySQL platform with addition of jQuery for AJAX calls to API.
 
-## Getting Started
+I chose to build the project without using PHP frameworks to display the ability to develop on all levels from database layer, model layer, application layer to front end and presentation layer. I used a frontend theme based on Bootstrap for rapid prototyping and responsive design.
 
-To use this template, choose one of the following options to get started:
-* Download the latest release on Start Bootstrap
-* Fork this repository on GitHub
+## If the project was chosen to continue
 
-## Bugs and Issues
+In case I was chosen to continue with this project to further improve the existing features and implement additional features, I would rewrite it on an established PHP framework of choice for stability and security purposes and because no one wants me to "reinvent the wheel".
 
-Have a bug or an issue with this theme? [Open a new issue](https://github.com/IronSummitMedia/startbootstrap-stylish-portfolio/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/stylish-portfolio/).
+## Start Bootstrap frontend theme
 
-## Creator
+For this project I used the modified Start Bootstrap theme to quickly develop the interface.
 
 Start Bootstrap was created by and is maintained by **David Miller**, Managing Parter at [Iron Summit Media Strategies](http://www.ironsummitmedia.com/).
 
-* https://twitter.com/davidmillerskt
 * https://github.com/davidtmiller
 
 Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
 
-## Copyright and License
+## Copyright and License of Stylish portfolio Boottstrap theme:
 
 Copyright 2013-2015 Iron Summit Media Strategies, LLC. Code released under the [Apache 2.0](https://github.com/IronSummitMedia/startbootstrap-stylish-portfolio/blob/gh-pages/LICENSE) license.
