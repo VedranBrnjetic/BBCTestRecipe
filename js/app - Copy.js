@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-	var gSearchQuery="";
 	/*Initial request - gets current user from app and displays the name */
 	$.ajax({
 		url: "classes/app.php",
@@ -43,70 +42,23 @@ $(document).ready(function(){
 	
 	/*                     ######                  FILTERING   */
 	
-	var filterRecipes=function(sMode,gSearchQuery,requestPage){
-		//requested page
-		if(requestPage===undefined){	requestPage=1;	}
-		
+	var filterRecipes=function(){
+		var mode=$("#search_param").val();
+		var query=$("#search_query").val();
 		$.ajax({
 			url: "classes/app.php",
 			type: "POST",
-			data: {userid: 1,searchRecipes: sMode,searchQuery: gSearchQuery, page: requestPage}	//everyone is Joe for until I get the login feature done...
-		
+			data: {userid: 1,searchRecipes: mode,searchQuery: query}	
+		/*here is the data sent to chat server*/
 		})
 		.done(function(data){
 			obj=jQuery.parseJSON(data);
 			
 			var recipes=obj['filteredRecipes'];
-			
-			//#####################################################PAGINATION######################
-			//Pagination starts here. I created an object that holds all necessary info for the pagination function which returns the html
-			var numberOfPages=Math.ceil(obj.recipeCount[0] / 10);
-			//pagination object; will eventually have a function to return html
-			var pagination={
-				numPages: numberOfPages, 
-				html: "",
-				page: requestPage, 
-				start: ( ( requestPage - 9 ) > 0 ) ? requestPage - 9 : 1, 
-				end: ( ( requestPage + 9 ) < numberOfPages ) ? requestPage + 9 : numberOfPages,
-				sethtml: function(){
-					//keep your strings clean
-					this.html="";
-					this.html=	'<nav id="filtered-recipes-pagination">'+
-								'      <ul class="pagination"><li ';
-					//first page
-					if(this.page==1) { this.html += ' class=active ';}
-					this.html += ' ><button>First <span class="sr-only">(current)</span></button> ';
-					//mid section
-					i=this.start;
-					do{
-						this.html+='<li ';
-						//current page
-						if(this.page==i){
-							this.html+= ' class="active" ';
-						}
-						current=(this.page==i) ? '(current)':'';
-						this.html+= '><button>'+i +'<span class="sr-only">'+ current + '</span></button></li>';
-						i++;
-					}
-					while(i<=this.end);
-					//last page
-					this.html+='<li';
-					if(this.page==this.numPages) { this.html += ' class="active" ';}
-					this.html+='><button>Last</button></li></ul></nav>';
-					return this.html;
-					
-				}
-			};
-			
-			
-			
 			if(recipes.length<1){
 				html='<h4><strong>Sorry, we currently have no recipes for you.</strong></h4>';
 				$("#searchResults").html(html);
 				return;
-			}
-			else {
-				
 			}
 //filteredRecipes
 			var html='<div class="filtered-recipes" data-example-id="panel-without-body-with-table">'+
@@ -137,31 +89,24 @@ $(document).ready(function(){
 '          </tr>'+
 '        </tbody>'+
 '      </table>'+
-'    </div>'+pagination.sethtml()+
+'    </div>'+
 '  </div>';
 	$("#searchResults").html(html);
 		})
 	};
-	
-	
-	//#######################################search function
+	//search function
 	$( "#search_query" ).keydown(function( event ) { /* to work on pressing the enter key*/
 		if ( event.which == 13 ) {
 		event.preventDefault();
 		if($("#search_query").val().length<2) return; //no search less than 3 characters
-		gSearchQuery=$("#search_query").val();
-		filterRecipes($("#search_param").val(),gSearchQuery);
+		filterRecipes();
 		}
 	});
 	$(".input-group-btn").click(function(){
 		if($("#search_query").val().length<2) return; //no search less than 3 characters
-		gSearchQuery=$("#search_query").val();
-		filterRecipes($("#search_param").val(),gSearchQuery);
+		filterRecipes();
 		
 	});
-	
-	
-	
 	//star recipes
 	$("#toggle-star").mouseover(function(){
 		if ($("#star-icon").hasClass("fa-star")){
@@ -233,15 +178,8 @@ $(document).ready(function(){
 		});
 	})
 	
-	//####################################request pages of filtered recipes
-	//        I had to bind it on the fly because the elements are not a part of the DOM at the execution time. 
-	$( document ).on("click", ".pagination li button",function(e){
-		e.preventDefault;
-		filterRecipes($("#search_param").val(),gSearchQuery,$(e.target).text());
-	});
+	
 });
-
-
 
 
  
